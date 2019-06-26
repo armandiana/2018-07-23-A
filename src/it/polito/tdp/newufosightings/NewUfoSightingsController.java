@@ -51,12 +51,51 @@ public class NewUfoSightingsController {
 
 	@FXML
 	void doCreaGrafo(ActionEvent event) {
+		Integer anno=null;
+		String shape=null;
+		try {
+			anno= Integer.parseInt(this.txtAnno.getText());
+		}catch(IllegalArgumentException e) {
+			this.txtResult.appendText("Inserire un anno dal 1910 al 2014 nel formato corretto.\n");
+			return;
+		}
+		try {
+			shape= this.cmbBoxForma.getValue();
+		}catch(NullPointerException e) {
+			this.txtResult.appendText("Selezionare una forma dal menù a tendina.\n");
+			return;
+		}
+		if(anno>2014||anno<1910) {
+			this.txtResult.appendText("Inserire un anno dal 1910 al 2014.\n");
+		}
+		
+		this.model.creaGrafo(anno, shape);
+		this.txtResult.appendText("Creato grafo con "+this.model.getGrafo().vertexSet().size()+" vertici e "+this.model.getGrafo().edgeSet().size()+" archi.\n");
 
+
+		for(String s: this.model.getGrafo().vertexSet()) {
+			this.txtResult.appendText("Stato: "+s+" con peso: "+this.model.getPesoTotale(s)+".\n");
+		}
 	}
 
 	@FXML
 	void doSelezionaAnno(ActionEvent event) {
-
+		Integer anno=null;
+		
+		try {
+			anno= Integer.parseInt(this.txtAnno.getText());
+			
+		}catch(IllegalArgumentException e) {
+			this.txtResult.appendText("Inserire un anno dal 1910 al 2014 nel formato corretto.\n");
+			return;
+		}
+		
+		if(anno>2014 || anno<1910) {
+			this.txtResult.appendText("Inserire un anno dal 1910 al 2014.\n");
+			return;
+		}
+		this.cmbBoxForma.getItems().clear();
+		this.cmbBoxForma.getItems().addAll(this.model.getFormeByYear(anno));
 	}
 
 	@FXML
@@ -79,6 +118,6 @@ public class NewUfoSightingsController {
 
 	public void setModel(Model model) {
 		this.model = model;
-
+		this.cmbBoxForma.getItems().clear();
 	}
 }
