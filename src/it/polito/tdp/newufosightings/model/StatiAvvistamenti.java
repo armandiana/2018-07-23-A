@@ -23,7 +23,7 @@ public class StatiAvvistamenti {
 	}
 	@Override
 	public String toString() {
-		return  statoVicino + "- numeroAvvistamenti=" + numeroAvvistamenti;
+		return  statoVicino + " - numero Avvistamenti=" + numeroAvvistamenti;
 	}
 	
 }

@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import it.polito.tdp.newufosightings.model.Sighting;
 import it.polito.tdp.newufosightings.model.State;
 import it.polito.tdp.newufosightings.model.StatiAvvistamenti;
@@ -139,35 +137,6 @@ public class NewUfoSightingsDAO {
 			while (rs.next()) {
 				StatiAvvistamenti sa= new StatiAvvistamenti(rs.getString("state"), rs.getInt("COUNT(*)"));
 				result.add(sa);
-			}
-			conn.close();
-			return result;
-			
-		}catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Errore connessione al database");
-			throw new RuntimeException("Error Connection Database");
-		}
-	}
-	
-	/*public List<State>getNeighbors(State s1){
-		String sql="SELECT s.id, s.NAME, s.Capital, s.Lat, s.Lng, s.AREA, s.Population, s.Neighbors\n" + 
-				"FROM neighbor n, state s\n" + 
-				"WHERE n.state2=s.id\n" + 
-				"AND n.state1=?";
-		List<State> result= new ArrayList<State>();
-		try {
-			Connection conn = ConnectDB.getConnection();
-			PreparedStatement st = conn.prepareStatement(sql);
-			st.setString(1, s1.getId());
-			
-			ResultSet rs = st.executeQuery();
-			
-			while (rs.next()) {
-				State state = new State(rs.getString("id"), rs.getString("Name"), rs.getString("Capital"),
-						rs.getDouble("Lat"), rs.getDouble("Lng"), rs.getInt("Area"), rs.getInt("Population"),
-						rs.getString("Neighbors"));
-				result.add(state);
 			}
 			conn.close();
 			return result;
